@@ -1,9 +1,9 @@
-export default function Main() {
+export default function Main({headlineText, subText}) {
 
     return (
-        <>
-            <h1>Astronaut To Do List</h1>
-            <h3>Add a to do</h3>
-        </>
+        <div className="titleList">
+            <h1>{headlineText}</h1>
+            <h4>{subText}</h4>
+        </div>
     )
 } 
