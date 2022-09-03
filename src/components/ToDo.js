@@ -18,11 +18,27 @@ export default function ToDo({toDoData}){
         console.log(toDoData);
     }
 
+    function handleDelete(){
+        setContent({toDoData})
+    }
+    function handleEdit(){
+        setContent({toDoData})
+    }
+    function handleDone(){
+        setContent({toDoData})
+    }
+
     return <div className="addNew">
         <div className="App">
             <AddNewText cb={handleTextState} />
             <AddButton cb={handleNewTaskClick} />
           </div>
-        <ListItems listArray = {toDoData} />
+         <ListItems listArray = {toDoData} handleDelete={handleDelete} handleEdit={handleEdit} handleDone={handleDone}/>
+        <ul>
+{/*             {
+                toDoData.map((item, idx, array) => <ListItem key={idx} item={item} toDoData = {array} handleDelete={handleDelete} handleEdit={handleEdit} handleDone={handleDone}/>)
+            } */}
+                               
+        </ul>
     </div>   
 }
