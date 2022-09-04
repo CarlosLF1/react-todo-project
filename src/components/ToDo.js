@@ -1,11 +1,22 @@
 import ListItems from './ListItems'
 import AddNewText from './AddNewText';
 import AddButton from './add';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 export default function ToDo({toDoData}){
 
     let textContent = '';
     let [content, setContent] = useState(toDoData)
+
+    useEffect(() => {
+        const storedTodos = JSON.parse(localStorage.getItem('LS'))
+        if (storedTodos) setContent(storedTodos)
+      }, [])
+    
+      useEffect(() => {
+        localStorage.setItem('LS', JSON.stringify(content))
+      }, [content])
+
+
     function handleTextState(newTask){
         textContent = newTask
     }
@@ -13,9 +24,7 @@ export default function ToDo({toDoData}){
     function handleNewTaskClick(){
         console.log('Log 1' + textContent)
         toDoData.push({id: toDoData[toDoData.length-1].id+1, text: textContent, done: false})
-        
         setContent({toDoData})
-        console.log(toDoData);
     }
 
     function handleDelete(){
