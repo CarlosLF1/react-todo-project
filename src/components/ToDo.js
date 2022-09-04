@@ -4,21 +4,21 @@ import AddButton from './add';
 import {useState, useEffect} from 'react'
 export default function ToDo({toDoData}){
 
-    let textContent = '';
+    let [textContent, setTextContent] = useState('') 
     let [content, setContent] = useState(toDoData)
 
     useEffect(() => {
         const storedTodos = JSON.parse(localStorage.getItem('LS'))
-        if (storedTodos) setContent(storedTodos)
-      }, [])
-    
-      useEffect(() => {
+        if (storedTodos.length ) setContent([...storedTodos])
+    }, [])
+
+    useEffect(() => {
         localStorage.setItem('LS', JSON.stringify(content))
-      }, [content])
+    }, [content])
 
 
-    function handleTextState(newTask){
-        textContent = newTask
+    function handleTextState(e){
+        setTextContent(e.target.value)
     }
   
     function handleNewTaskClick(){
