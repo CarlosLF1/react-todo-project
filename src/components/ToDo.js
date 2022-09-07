@@ -14,7 +14,7 @@ export default function ToDo({toDoData}){
 
         const storedTodos = JSON.parse(localStorage.getItem('LS'))
 
-        setContent([...storedTodos])
+        if (storedTodos) setContent([...storedTodos])
     }, [])
 
     useEffect(() => {

@@ -3,15 +3,15 @@ import EditText from "./editText";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
 
-export default function ListItem ({key, item}) {
+export default function ListItem ({item, onChange}) {
 
 
 
     return (
-        <li id={key} className="Item-list">
+        <li className="Item-list">
             
             <DoneRadio item={item} />
-            <EditText item={item} />
+            <EditText item={item} onChange={onChange} />
             <EditButton />
             <DeleteButton />
 
