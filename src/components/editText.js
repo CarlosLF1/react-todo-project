@@ -1,6 +1,6 @@
-export default function EditText({ item }) {
+export default function EditText({ item, onChange }) {
 
     return (
-        <input type="text" value={item.text}/>
+        <input type="text" value={item.text} onChange={onChange}/>
     )
 }
