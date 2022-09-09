@@ -1,6 +1,6 @@
 
 import ListItem from "./ListItem"
-export default function ListItems({listArray}) {
+export default function ListItems({listArray, handleDone}) {
 
 
 
@@ -8,7 +8,7 @@ export default function ListItems({listArray}) {
         <div>
             <ul>
                 {
-                    listArray.map((item, idx) => <ListItem key={idx} item={item}/>)
+                    listArray.map((item, idx) => <ListItem item={item} listArray={listArray} handleDone={handleDone} />)
                 }
                                
             </ul>
