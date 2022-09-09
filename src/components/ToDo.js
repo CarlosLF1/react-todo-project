@@ -1,44 +1,63 @@
 import ListItems from './ListItems'
 import AddNewText from './AddNewText';
 import AddButton from './add';
-import {useState} from 'react'
-export default function ToDo({toDoData}){
+import {useState, useEffect} from 'react'
 
-    let textContent = '';
-    let [content, setContent] = useState(toDoData)
-    function handleTextState(newTask){
-        textContent = newTask
-    }
+
+export default function ToDo({toDoData}){
+     
+    let [content, setContent] = useState([])
+
+    let [textContent, setTextContent] = useState('')
+    
+    useEffect(() => {
+
+        const storedTodos = JSON.parse(localStorage.getItem('LS'))
+
+        if (storedTodos) setContent([...storedTodos])
+    }, [])
+
+    useEffect(() => {
+        // there will a problem when you want to delete all items but it can resolved later
+        if (content.length) localStorage.setItem('LS', JSON.stringify(content))
+
+    }, [content])
+ 
   
     function handleNewTaskClick(){
-        console.log('Log 1' + textContent)
-        toDoData.push({id: toDoData[toDoData.length-1].id+1, text: textContent, done: false})
-        
-        setContent({toDoData})
-        console.log(toDoData);
-    }
 
+        const oldData = [...content]
+
+        oldData.push({id: oldData.length +1, text: textContent, done: false})
+
+        setContent([...oldData])
+
+        localStorage.setItem('LS', JSON.stringify(content))
+        
+    }
+console.log('useEffect1: content is', content) 
     function handleDelete(){
         setContent({toDoData})
     }
     function handleEdit(){
         setContent({toDoData})
     }
-    function handleDone(){
-        setContent({toDoData})
+    function handleDone(id) {
+        const doneArray = [...content]
+        const doneIndex = doneArray.findIndex((element) => 
+            element.id === id
+        )
+        doneArray[doneIndex].done = !doneArray[doneIndex].done;
+        setContent(doneArray);
+        // Can we add Local storage?
+        localStorage.setItem('LS', JSON.stringify(content))
     }
 
     return <div className="addNew">
         <div className="App">
-            <AddNewText cb={handleTextState} />
+            <AddNewText cb={setTextContent} value={textContent} />
             <AddButton cb={handleNewTaskClick} />
           </div>
-         <ListItems listArray = {toDoData} handleDelete={handleDelete} handleEdit={handleEdit} handleDone={handleDone}/>
-        <ul>
-{/*             {
-                toDoData.map((item, idx, array) => <ListItem key={idx} item={item} toDoData = {array} handleDelete={handleDelete} handleEdit={handleEdit} handleDone={handleDone}/>)
-            } */}
-                               
-        </ul>
+         <ListItems listArray = {content} handleDelete={handleDelete} handleEdit={handleEdit} handleDone={handleDone}/>
     </div>   
 }
