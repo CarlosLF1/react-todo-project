@@ -1,6 +1,9 @@
-export default function EditText({ item, onChange }) {
-
+export default function EditText({ item, cb, disabled, myref}) {
+    function textChange(e){
+        console.log("text value",  e.target.value)
+        cb(e.target.value)
+    }
     return (
-        <input type="text" value={item.text} onChange={onChange}/>
+        <input ref={myref} type="text" defaultValue={item} onChange={textChange} disabled={disabled}/>
     )
 }

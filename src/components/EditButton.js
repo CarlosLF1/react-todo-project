@@ -1,8 +1,8 @@
 
-export default function EditButton() {
+export default function EditButton({cb}) {
 
     return (
-        <button>Edit</button>
+        <button onClick={cb}>Edit</button>
     )
 }
 
