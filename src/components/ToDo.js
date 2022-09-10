@@ -21,6 +21,7 @@ export default function ToDo(){
 
     useEffect(() => {
         // there will a problem when you want to delete all items but it can resolved later
+       console.log("content:",content)
         if (content.length) localStorage.setItem('LS', JSON.stringify(content))
 
     }, [content])
@@ -41,9 +42,9 @@ console.log('useEffect1: content is', content)
     
 
     const handleDeleteTask = (id) =>{
-        const newToDoData = content.filter((eachToDo) => eachToDo.id !== id)
-  
-       setContent(newToDoData)
+       const newToDoData = content.filter((eachToDo) => eachToDo.id !== id);
+       if (newToDoData.length===0) localStorage.setItem('LS', JSON.stringify(newToDoData))
+       setContent(newToDoData);
     }
 
   
@@ -75,6 +76,7 @@ console.log('useEffect1: content is', content)
         localStorage.setItem('LS', JSON.stringify(content))
     }
 
+   
     return <div className="addNew">
         <div className="App">
             <AddNewText cb={setTextContent} value={textContent} />
