@@ -4,6 +4,6 @@ export default function EditText({ item, cb, disabled, myref}) {
         cb(e.target.value)
     }
     return (
-        <input ref={myref} type="text" defaultValue={item} onChange={textChange} disabled={disabled}/>
+        <input ref={myref} type="text" className={item.done ? "strike-through" : 'normal-task'} defaultValue={item.text} onChange={textChange} disabled={disabled}/>
     )
 }

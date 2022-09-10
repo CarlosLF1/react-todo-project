@@ -5,11 +5,12 @@ import {useState, useEffect} from 'react'
 import { isDocument } from '@testing-library/user-event/dist/utils';
 
 
-export default function ToDo({toDoData}){
+export default function ToDo(){
      
     let [content, setContent] = useState([])
 
     let [textContent, setTextContent] = useState('')
+
     
     useEffect(() => {
 
@@ -37,9 +38,17 @@ export default function ToDo({toDoData}){
         
     }
 console.log('useEffect1: content is', content) 
-    function handleDelete(){
-        setContent({toDoData})
+    
+
+    const handleDeleteTask = (id) =>{
+        const newToDoData = content.filter((eachToDo) => eachToDo.id !== id)
+  
+       setContent(newToDoData)
     }
+
+  
+
+
     function handleEdit(txt,idx){
         console.log("edited text and id", txt, idx)
         const oldData = [...content]
@@ -55,8 +64,15 @@ console.log('useEffect1: content is', content)
 
         localStorage.setItem('LS', JSON.stringify(content))
     }
-    function handleDone(){
-        setContent({toDoData})
+    function handleDone(id) {
+        const doneArray = [...content]
+        const doneIndex = doneArray.findIndex((element) => 
+            element.id === id
+        )
+        doneArray[doneIndex].done = !doneArray[doneIndex].done;
+        setContent(doneArray);
+        // Can we add Local storage?
+        localStorage.setItem('LS', JSON.stringify(content))
     }
 
     return <div className="addNew">
@@ -64,6 +80,6 @@ console.log('useEffect1: content is', content)
             <AddNewText cb={setTextContent} value={textContent} />
             <AddButton cb={handleNewTaskClick} />
           </div>
-         <ListItems listArray = {content} handleDelete={handleDelete} handleEdit={handleEdit} handleDone={handleDone}/>
+         <ListItems listArray = {content} handleDeleteTask={handleDeleteTask} handleEdit={handleEdit} handleDone={handleDone}/>
     </div>   
 }

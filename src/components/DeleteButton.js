@@ -1,6 +1,10 @@
-export default function DeleteButton() {
+import { useState } from "react"
 
+
+//this sateyd here:
+export default function DeleteButton({item, handleDeleteTask}) {    
+    console.log("id:",item)
     return (
-        <button>Delete</button>
+        <button onClick={()=>handleDeleteTask(item.id)} >Delete</button>
     )
 }
